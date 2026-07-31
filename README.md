@@ -152,3 +152,14 @@ flowchart LR
 ## 📄 License
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
+👩‍💻 About Me
+
+Hi, I'm Yetunde Afolayan — a Data Analyst and Business Strategy Analyst with experience in:
+
+Monitoring & Evaluation
+Business Analysis
+Strategic Decision-Making
+Data Collection & Cleaning
+Data Validation & Analysis
+I specialize in transforming raw data into actionable insights that drive business performance and strategic planning.
