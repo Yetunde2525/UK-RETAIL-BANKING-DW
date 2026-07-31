@@ -45,7 +45,7 @@ Six raw CSV extracts, intentionally seeded with realistic data quality issues to
 
 ```mermaid
 flowchart LR
-    subgraph Sources
+    subgraph Sources["Source Systems"]
         A[Core Banking System]
         B[CRM Platform]
         C[Loan Management System]
@@ -53,15 +53,15 @@ flowchart LR
         E[Branch Operations System]
     end
 
-    subgraph Bronze [Bronze Layer]
+    subgraph Bronze["🥉 Bronze Layer"]
         F[(Raw tables — as-is load)]
     end
 
-    subgraph Silver [Silver Layer]
+    subgraph Silver["🥈 Silver Layer"]
         G[(Cleansed & standardized)]
     end
 
-    subgraph Gold [Gold Layer]
+    subgraph Gold["🥇 Gold Layer"]
         H[(Business-ready views)]
     end
 
@@ -73,6 +73,23 @@ flowchart LR
     F --> G
     G --> H
     H --> I[Power BI Dashboard]
+
+    classDef sourceStyle fill:#4A90D9,stroke:#2C5F8A,color:#ffffff,stroke-width:1.5px;
+    classDef bronzeStyle fill:#CD7F32,stroke:#8B5A2B,color:#ffffff,stroke-width:1.5px;
+    classDef silverStyle fill:#B0B3B8,stroke:#7A7D82,color:#ffffff,stroke-width:1.5px;
+    classDef goldStyle fill:#D4AF37,stroke:#9C7A22,color:#1a1a1a,stroke-width:1.5px;
+    classDef dashboardStyle fill:#2EA44F,stroke:#1B6E34,color:#ffffff,stroke-width:1.5px;
+
+    class A,B,C,D,E sourceStyle;
+    class F bronzeStyle;
+    class G silverStyle;
+    class H goldStyle;
+    class I dashboardStyle;
+
+    style Sources fill:#EAF2FB,stroke:#4A90D9,stroke-width:1px;
+    style Bronze  fill:#F5E6DA,stroke:#CD7F32,stroke-width:1px;
+    style Silver  fill:#F0F0F0,stroke:#B0B3B8,stroke-width:1px;
+    style Gold    fill:#FCF3D9,stroke:#D4AF37,stroke-width:1px;
 ```
 
 - **Bronze** — raw data loaded exactly as received, no transformations
@@ -87,7 +104,7 @@ flowchart LR
 ## 📁 Repository Structure
 
 ```
-├── datasets/                  # Raw source CSVs
+├── datasets/                          # Raw source CSVs
 │   ├── customers.csv
 │   ├── accounts.csv
 │   ├── transactions.csv
@@ -95,11 +112,22 @@ flowchart LR
 │   ├── complaints.csv
 │   └── branches.csv
 ├── scripts/
-│   ├── init_database.sql      # Creates database + bronze/silver/gold schemas
-│   ├── bronze/                # Raw table DDL + load scripts
-│   ├── silver/                # Cleansing & transformation scripts
-│   └── gold/                  # Business views & stored procedures
-├── docs/                       # Data catalog, data model diagrams
+│   ├── 00_init_database.sql           # Creates database + bronze/silver/gold schemas
+│   ├── bronze/
+│   │   ├── 01_ddl_bronze.sql          # Raw table DDL (6 tables, all NVARCHAR)
+│   │   └── 02_load_bronze.sql         # bronze.load_bronze — BULK INSERT from CSVs
+│   ├── silver/
+│   │   ├── 03_ddl_silver.sql          # Cleansed table DDL + date/case helper functions
+│   │   └── 04_load_silver.sql         # silver.load_silver — dedup, standardize, validate
+│   ├── gold/
+│   │   ├── 05_ddl_gold.sql            # Star schema: DimDate/Customer/Branch/Account/Loan + 3 facts
+│   │   ├── 06_load_gold.sql           # gold.load_gold — builds DimDate, loads all dims/facts
+│   │   └── 07_views.sql               # 4 reporting views for BI consumption
+│   ├── checks/
+│   │   └── 08_data_quality_checks.sql # Informational SELECTs — duplicate/missing/invalid counts
+│   └── business_questions/
+│       └── 09_business_questions.sql  # All 20 business questions as runnable SQL
+├── docs/                               # Data catalog, data model diagrams
 ├── README.md
 └── LICENSE
 ```
@@ -107,9 +135,13 @@ flowchart LR
 ## ▶️ How to Use
 
 1. Clone this repository
-2. Run `scripts/init_database.sql` first — this creates the database and schemas (⚠️ see warning in the script header before running)
-3. Run the bronze, then silver, then gold scripts in order
-4. Point Power BI at the gold-layer views to build the dashboard
+2. Run `scripts/00_init_database.sql` first — creates the database and schemas (⚠️ see warning in the script header)
+3. Run `scripts/bronze/01_ddl_bronze.sql`, then `02_load_bronze.sql` (update the CSV file paths inside it first, or use SSMS's Import Flat File wizard if BULK INSERT can't see local files)
+4. Run `scripts/silver/03_ddl_silver.sql`, then `04_load_silver.sql`
+5. Run `scripts/gold/05_ddl_gold.sql`, then `06_load_gold.sql`, then `07_views.sql`
+6. Run `scripts/checks/08_data_quality_checks.sql` to sanity-check row counts and data quality
+7. Explore `scripts/business_questions/09_business_questions.sql` for the 20 business questions
+8. Point Power BI at the gold-layer views/tables to build the dashboard
 
 ## 📈 Status
 
