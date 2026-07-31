@@ -43,7 +43,7 @@ BEGIN
         TRUNCATE TABLE bronze.customers;
         PRINT '>> Loading:    bronze.customers';
         BULK INSERT bronze.customers
-        FROM 'C:\data\raw\customers.csv'
+        FROM 'C:\Users\yetun\OneDrive\UK Retail Banking Customer Analytics Data Warehouse\uk BRD\customers.csv'
         WITH (FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '0x0a', TABLOCK, CODEPAGE = '65001');
         PRINT '>> Duration: ' + CAST(DATEDIFF(SECOND, @start_time, GETDATE()) AS NVARCHAR) + ' sec';
 
@@ -53,7 +53,7 @@ BEGIN
         TRUNCATE TABLE bronze.accounts;
         PRINT '>> Loading:    bronze.accounts';
         BULK INSERT bronze.accounts
-        FROM 'C:\data\raw\accounts.csv'
+        FROM 'C:\Users\yetun\OneDrive\UK Retail Banking Customer Analytics Data Warehouse\uk BRD\accounts.csv'
         WITH (FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '0x0a', TABLOCK, CODEPAGE = '65001');
         PRINT '>> Duration: ' + CAST(DATEDIFF(SECOND, @start_time, GETDATE()) AS NVARCHAR) + ' sec';
 
@@ -63,7 +63,7 @@ BEGIN
         TRUNCATE TABLE bronze.transactions;
         PRINT '>> Loading:    bronze.transactions';
         BULK INSERT bronze.transactions
-        FROM 'C:\data\raw\transactions.csv'
+        FROM 'C:\Users\yetun\OneDrive\UK Retail Banking Customer Analytics Data Warehouse\uk BRD\transactions.csv'
         WITH (FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '0x0a', TABLOCK, CODEPAGE = '65001');
         PRINT '>> Duration: ' + CAST(DATEDIFF(SECOND, @start_time, GETDATE()) AS NVARCHAR) + ' sec';
 
@@ -73,7 +73,7 @@ BEGIN
         TRUNCATE TABLE bronze.loans;
         PRINT '>> Loading:    bronze.loans';
         BULK INSERT bronze.loans
-        FROM 'C:\data\raw\loans.csv'
+        FROM 'C:\Users\yetun\OneDrive\UK Retail Banking Customer Analytics Data Warehouse\uk BRD\loans.csv'     
         WITH (FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '0x0a', TABLOCK, CODEPAGE = '65001');
         PRINT '>> Duration: ' + CAST(DATEDIFF(SECOND, @start_time, GETDATE()) AS NVARCHAR) + ' sec';
 
@@ -83,7 +83,7 @@ BEGIN
         TRUNCATE TABLE bronze.complaints;
         PRINT '>> Loading:    bronze.complaints';
         BULK INSERT bronze.complaints
-        FROM 'C:\data\raw\complaints.csv'
+        FROM 'C:\Users\yetun\OneDrive\UK Retail Banking Customer Analytics Data Warehouse\uk BRD\complaints.csv'
         WITH (FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '0x0a', TABLOCK, CODEPAGE = '65001');
         PRINT '>> Duration: ' + CAST(DATEDIFF(SECOND, @start_time, GETDATE()) AS NVARCHAR) + ' sec';
 
@@ -93,7 +93,7 @@ BEGIN
         TRUNCATE TABLE bronze.branches;
         PRINT '>> Loading:    bronze.branches';
         BULK INSERT bronze.branches
-        FROM 'C:\data\raw\branches.csv'
+        FROM 'C:\Users\yetun\OneDrive\UK Retail Banking Customer Analytics Data Warehouse\uk BRD\branches.csv'
         WITH (FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '0x0a', TABLOCK, CODEPAGE = '65001');
         PRINT '>> Duration: ' + CAST(DATEDIFF(SECOND, @start_time, GETDATE()) AS NVARCHAR) + ' sec';
 
@@ -105,8 +105,10 @@ BEGIN
     BEGIN CATCH
         PRINT '===============================================';
         PRINT 'ERROR OCCURRED DURING BRONZE LAYER LOAD';
-        PRINT 'Error Message: ' + ERROR_MESSAGE();
-        PRINT 'Error Number:  ' + CAST(ERROR_NUMBER() AS NVARCHAR);
+        PRINT 'Error Number: ' + CAST(ERROR_NUMBER() AS NVARCHAR(50));
+		PRINT 'Error Message: ' + ERROR_MESSAGE();
+		PRINT 'Error Line: ' + CAST(ERROR_LINE() AS NVARCHAR(50));
+		PRINT 'Error Procedure: ' + ISNULL(ERROR_PROCEDURE(), 'N/A');
         PRINT '===============================================';
     END CATCH
 END
