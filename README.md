@@ -87,9 +87,9 @@ flowchart LR
     class I dashboardStyle;
 
     style Sources fill:#EAF2FB,stroke:#4A90D9,stroke-width:1px;
-    style Bronze  fill:#F5E6DA,stroke:#CD7F32,stroke-width:1px;
-    style Silver  fill:#F0F0F0,stroke:#B0B3B8,stroke-width:1px;
-    style Gold    fill:#FCF3D9,stroke:#D4AF37,stroke-width:1px;
+    style Bronze  fill:#F5E6DA,stroke:#CD7F32,stroke-width:1px,color:#000000;
+    style Silver  fill:#F0F0F0,stroke:#B0B3B8,stroke-width:1px,color:#000000;
+    style Gold    fill:#FCF3D9,stroke:#D4AF37,stroke-width:1px,color:#000000;
 ```
 
 - **Bronze** — raw data loaded exactly as received, no transformations
@@ -152,16 +152,3 @@ flowchart LR
 ## 📄 License
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
-
-
-
-👩‍💻 About Me
-
-Hi, I'm Yetunde Afolayan — a Data Analyst and Business Strategy Analyst with experience in:
-
-Monitoring & Evaluation
-Business Analysis
-Strategic Decision-Making
-Data Collection & Cleaning
-Data Validation & Analysis
-I specialize in transforming raw data into actionable insights that drive business performance and strategic planning.
