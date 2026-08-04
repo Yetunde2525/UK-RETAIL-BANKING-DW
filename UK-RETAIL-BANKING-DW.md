@@ -26,13 +26,6 @@ Full detail in `docs/data_architecture.md`.
 8. **Documentation suite** — `docs/data_architecture.md`, `data_integration.md`, `data_mart.md`, `data_catalog.md`, `data_flow.md`, `naming_conventions.md`
 9. **Automation** — `run_pipeline.ps1` runs the full pipeline end-to-end; separate deployment scripts were used to push documentation and pipeline scripts from a local machine to GitHub
 
-## Troubleshooting Log
-
-- **PowerShell encoding bug** — an em-dash character in a status message caused Windows PowerShell to misread the file's text encoding, corrupting string parsing for the rest of the script. Fixed by keeping automation scripts to pure ASCII and verifying every embedded file decodes byte-for-byte before use.
-- **Folder casing mismatch** — local folders existed as `Docs` / `Scripts` / `Datasets` from earlier manual work, while later automation targeted lowercase names. On Windows' case-insensitive filesystem this caused `git add` to silently skip newly-written files. Fixed by staging with `git add -A` and standardizing on lowercase folder names throughout.
-- **OneDrive Desktop redirection** — OneDrive silently redirects `Desktop` to `OneDrive\Desktop`, so scripts referencing the plain path couldn't find files saved under the OneDrive-managed one. Resolved by always confirming the real path before running a script.
-- **Uninitialized git folder** — an early clone attempt landed in a folder that was a plain directory, not an actual git repository, causing every `git` command to fail. Fixed by renaming the stale folder aside and performing a clean clone.
-
 ## Datasets
 
 6 raw CSV extracts with intentionally seeded data quality issues (mixed date formats, inconsistent casing, duplicate records, invalid values):
