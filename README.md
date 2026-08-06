@@ -153,9 +153,8 @@ flowchart LR
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
 
-
 ## Dashboard Preview
 
-![UK Retail Banking Dashboard](assets/dashboard_preview.png)
+![UK Retail Banking Dashboard](https://yetunde2525.github.io/Uk-Retail-Banking-DW/assets/dashboard_preview.png)
 
-An interactive version (region filters, sortable tables, live tooltips) is available in [dashboard/uk_retail_banking_dashboard.html](dashboard/uk_retail_banking_dashboard.html) -- download and open it in any browser.
+**[View the live interactive dashboard](https://yetunde2525.github.io/Uk-Retail-Banking-DW/dashboard/uk_retail_banking_dashboard.html)** -- region filters, sortable tables, and live tooltips, hosted via GitHub Pages.
