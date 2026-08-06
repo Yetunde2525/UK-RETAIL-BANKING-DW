@@ -152,3 +152,10 @@ flowchart LR
 ## 📄 License
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
+
+## Dashboard Preview
+
+![UK Retail Banking Dashboard](assets/dashboard_preview.png)
+
+An interactive version (region filters, sortable tables, live tooltips) is available in [dashboard/uk_retail_banking_dashboard.html](dashboard/uk_retail_banking_dashboard.html) -- download and open it in any browser.
